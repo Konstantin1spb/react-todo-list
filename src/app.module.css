@@ -1,0 +1,20 @@
+.todos {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 30px;
+}
+
+.todo {
+	width: 50%;
+	height: 50px;
+	background-color: rgb(85, 85, 255);
+	border-radius: 10px;
+	font-size: 20px;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	margin: 10px 0;
+	padding-left: 10px;
+}
