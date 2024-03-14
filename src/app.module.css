@@ -6,15 +6,67 @@
 	margin-top: 30px;
 }
 
+.todosContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.blured {
+	filter: blur(4px);
+}
+
 .todo {
 	width: 50%;
 	height: 50px;
-	background-color: rgb(85, 85, 255);
+	background-color: rgb(112, 112, 255);
 	border-radius: 10px;
 	font-size: 20px;
 	color: #fff;
 	display: flex;
 	align-items: center;
 	margin: 10px 0;
-	padding-left: 10px;
+	padding: 0 10px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.todo div {
+	display: flex;
+	gap: 10px;
+}
+
+.editButton {
+	width: 20px;
+	height: 20px;
+	background: url(../assets/img/edit-img.png) no-repeat center top / cover;
+	cursor: pointer;
+}
+
+.editTodoForm {
+	position: absolute;
+	top: -45%;
+	left: -40%;
+	z-index: -1;
+	opacity: 0;
+}
+
+.active {
+	top: 40%;
+	left: 40%;
+	z-index: 1;
+	opacity: 1;
+}
+
+.deleteButton {
+	width: 20px;
+	height: 20px;
+	background: url(../assets/img/delete-img.png) no-repeat center top / cover;
+	cursor: pointer;
+}
+
+.error {
+	color: red;
 }
