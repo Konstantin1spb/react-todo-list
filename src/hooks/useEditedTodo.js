@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { ref, set } from 'firebase/database';
+import { db } from '../firebase';
 
-export const useEditedTodo = (refreshTodos, setRefreshTodos, currentId, setCurrentId) => {
+export const useEditedTodo = (currentId, setCurrentId) => {
 	const [editedTodo, setEditedTodo] = useState();
 	const [openModal, setOpenModal] = useState(false);
 	const [editedTodoError, setEditedTodoError] = useState(true);
@@ -21,17 +23,12 @@ export const useEditedTodo = (refreshTodos, setRefreshTodos, currentId, setCurre
 
 	const onSubmitEditedTodo = (event) => {
 		event.preventDefault();
-		fetch(`http://localhost:3005/todos/${currentId}`, {
-			method: 'PUT',
-			headers: { 'Content-Type': 'application/json;charset=utf-8' },
-			body: JSON.stringify({
-				title: editedTodo,
-			}),
+		const todoDbRef = ref(db, `todos/${currentId}`);
+		set(todoDbRef, {
+			title: editedTodo,
 		})
-			.then((rawResponse) => rawResponse.json())
 			.then((response) => {
 				console.log('Todo edited:', response);
-				setRefreshTodos(!refreshTodos);
 			})
 			.finally(() => setOpenModal(false));
 	};

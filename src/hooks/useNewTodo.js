@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { ref, push } from 'firebase/database';
+import { db } from '../firebase';
 
-export const useNewTodo = (refreshTodos, setRefreshTodos) => {
+export const useNewTodo = () => {
 	const [newTodo, setNewTodo] = useState();
 
 	const onChangeNewTodo = ({ target }) => {
@@ -9,18 +11,12 @@ export const useNewTodo = (refreshTodos, setRefreshTodos) => {
 
 	const onSubmitNewTodo = (event) => {
 		event.preventDefault();
-		fetch('http://localhost:3005/todos', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json;charset=utf-8' },
-			body: JSON.stringify({
-				title: newTodo,
-			}),
-		})
-			.then((rawResponse) => rawResponse.json())
-			.then((response) => {
-				console.log('Todo added:', response);
-				setRefreshTodos(!refreshTodos);
-			});
+		const todosDbRef = ref(db, 'todos');
+		push(todosDbRef, {
+			title: newTodo,
+		}).then((response) => {
+			console.log('Todo added:', response);
+		});
 	};
 
 	return { newTodo, onChangeNewTodo, onSubmitNewTodo };

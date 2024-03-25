@@ -1,15 +1,13 @@
-export const useDeleteTodo = (currentId, setCurrentId, setRefreshTodos, refreshTodos) => {
+import { ref, remove } from 'firebase/database';
+import { db } from '../firebase';
+
+export const useDeleteTodo = (setCurrentId) => {
 	const onClickDeleteTodo = (id) => {
 		setCurrentId(id);
-		console.log(id);
-		fetch(`http://localhost:3005/todos/${currentId}`, {
-			method: 'DELETE',
-		})
-			.then((rawResponse) => rawResponse.json())
-			.then((response) => {
-				console.log('Todo deleted:', response);
-				setRefreshTodos(!refreshTodos);
-			});
+		const todoDbRef = ref(db, `todos/${id}`);
+		remove(todoDbRef).then((response) => {
+			console.log('Todo deleted:', response);
+		});
 	};
 
 	return onClickDeleteTodo;
